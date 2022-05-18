@@ -80,7 +80,7 @@ public partial class ModLoader : MonoBehaviour
     internal static void Init_MD()
     {
         if (unloader) return;
-        ModsFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"MySummerCar\Mods");
+        ModsFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Path.Combine("MySummerCar", "Mods"));
         PrepareModLoader();
     }
 
@@ -357,7 +357,7 @@ public partial class ModLoader : MonoBehaviour
     }
     internal void CheckForModsUpd(bool force = false)
     {
-        string sp = Path.Combine(SettingsFolder, @"MSCLoader_Settings\lastCheck");
+        string sp = Path.Combine(SettingsFolder, Path.Combine("MSCLoader_Settings", "lastCheck"));
         if (force)
         {
             DownloadUpdateData();
@@ -378,14 +378,14 @@ public partial class ModLoader : MonoBehaviour
                 }
                 else
                 {
-                    if (File.Exists(Path.Combine(SettingsFolder, @"MSCLoader_Settings\updateInfo.json")))
+                    if (File.Exists(Path.Combine(SettingsFolder, Path.Combine("MSCLoader_Settings","updateInfo.json"))))
                     {
-                        string s = File.ReadAllText(Path.Combine(SettingsFolder, @"MSCLoader_Settings\updateInfo.json"));
+                        string s = File.ReadAllText(Path.Combine(SettingsFolder, Path.Combine("MSCLoader_Settings","updateInfo.json")));
                         ModVersions v = JsonConvert.DeserializeObject<ModVersions>(s);
                         ModMetadata.ReadUpdateInfo(v);
-                        if (File.Exists(Path.Combine(SettingsFolder, @"MSCLoader_Settings\ref_updateInfo.json")))
+                        if (File.Exists(Path.Combine(SettingsFolder, Path.Combine("MSCLoader_Settings","ref_updateInfo.json"))))
                         {
-                            string s2 = File.ReadAllText(Path.Combine(SettingsFolder, @"MSCLoader_Settings\ref_updateInfo.json"));
+                            string s2 = File.ReadAllText(Path.Combine(SettingsFolder, Path.Combine("MSCLoader_Settings","ref_updateInfo.json")));
                             RefVersions v2 = JsonConvert.DeserializeObject<RefVersions>(s2);
                             ModMetadata.ReadRefUpdateInfo(v2);
                         }
@@ -479,7 +479,7 @@ public partial class ModLoader : MonoBehaviour
                         k2 = ed[2]
                     };
                     System.Runtime.Serialization.Formatters.Binary.BinaryFormatter f = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                    string sp = Path.Combine(SettingsFolder, @"MSCLoader_Settings\otk.bin");
+                    string sp = Path.Combine(SettingsFolder, Path.Combine("MSCLoader_Settings","otk.bin"));
                     FileStream st = new FileStream(sp, FileMode.Create);
                     f.Serialize(st, s);
                     st.Close();
@@ -502,7 +502,7 @@ public partial class ModLoader : MonoBehaviour
         }
         catch (Exception ex)
         {
-            string sp = Path.Combine(SettingsFolder, @"MSCLoader_Settings\otk.bin");
+            string sp = Path.Combine(SettingsFolder, Path.Combine("MSCLoader_Settings", "otk.bin"));
             if (e.Error != null)
             {
                 if (File.Exists(sp))
@@ -1175,7 +1175,7 @@ public partial class ModLoader : MonoBehaviour
         if (!devMode)
         {
 
-            string cleanupLast = Path.Combine(SettingsFolder, @"MSCLoader_Settings\lastCleanupCheck");
+            string cleanupLast = Path.Combine(SettingsFolder, Path.Combine("MSCLoader_Settings", "lastCleanupCheck"));
             if (File.Exists(cleanupLast))
             {
                 string lastCheckS = File.ReadAllText(cleanupLast);
