@@ -51,7 +51,7 @@ namespace MSCPatcher
             }
             if (!File.Exists("MSCLoader.dll"))
             {
-                MessageBox.Show(string.Format("Don't run this file from zip folder. Unpack all files and start patcher again.", Environment.NewLine), "Read the freaking instructions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Don't run this file from the zip folder. Unpack all files and start the patcher again.", Environment.NewLine), "Read the freaking instructions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(0);
             }
             if (File.Exists("MSCFolder.txt"))
@@ -128,7 +128,7 @@ namespace MSCPatcher
                 else if (result[0] == "ok")
                 {
                     if (result[1].Trim().Length > 8)
-                        throw new Exception("Parse Error, please report that problem!");
+                        throw new Exception("Parse Error, please report this problem!");
                     version = result[1].Trim();
                 }
                 else
@@ -139,7 +139,7 @@ namespace MSCPatcher
                 if (i != 0)
                 {
                     Log.Write($"{Environment.NewLine}MCSLoader v{currentVersion}, New version available: v{version.Trim()}");
-                    if (MessageBox.Show($"New version is available: v{version.Trim()}, wanna check it out?", "MCSLoader v" + currentVersion, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    if (MessageBox.Show($"A new version is available: v{version.Trim()}, do you want to install it?", "MCSLoader v" + currentVersion, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                     {
                         try
                         {
@@ -157,7 +157,7 @@ namespace MSCPatcher
                             Log.Write(ex.ToString());
                         }
                     }
-                    statusBarLabel.Text = $"New version available: v{version.Trim()}";
+                    statusBarLabel.Text = $"A new version is available: v{version.Trim()}";
                 }
                 else if (i == 0)
                 {
@@ -253,7 +253,7 @@ namespace MSCPatcher
         {
             if(modPath == Path.GetFullPath("."))
             {
-                throw new Exception("Modloader Files unpacked into mod folder. Cannot install.");
+                throw new Exception("MSCLoader files were unpacked into the mod folder, cannot install.");
             }
             if (oldFilesFound)
             {

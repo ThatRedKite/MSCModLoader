@@ -69,7 +69,7 @@ namespace MSCLoader.Preloader
                 if (!ZipFile.IsZipFile(fn))
                 {
                     MDebug.Log("[MODLOADER UPDATE FAILED]");
-                    MDebug.Log($"Failed read zip file {fn}", true);
+                    MDebug.Log($"Failed to read zip file {fn}", true);
                 }
                 else
                 {
@@ -102,7 +102,7 @@ namespace MSCLoader.Preloader
                 if (!bool.TryParse(skipIntro, out introSkip))
                 {
                     introSkip = false;
-                    MDebug.Log($"[FAIL] skipIntro - Parse failed, readed value: {skipIntro}, restoring default...");
+                    MDebug.Log($"[FAIL] skipIntro - Parse failed, read value: {skipIntro}, restoring default...");
                     ini["MSCLoader"]["skipIntro"] = "false";
                     new FileIniDataParser().WriteFile("doorstop_config.ini", ini, System.Text.Encoding.ASCII);
                 }
@@ -110,7 +110,7 @@ namespace MSCLoader.Preloader
                 if (!bool.TryParse(skipCfg, out cfgScreenSkip))
                 {
                     cfgScreenSkip = false;
-                    MDebug.Log($"[FAIL] skipConfigScreen - Parse failed, readed value: {skipCfg}, restoring default...");
+                    MDebug.Log($"[FAIL] skipConfigScreen - Parse failed, read value: {skipCfg}, restoring default...");
                     ini["MSCLoader"]["skipConfigScreen"] = "false";
                     new FileIniDataParser().WriteFile("doorstop_config.ini", ini, System.Text.Encoding.ASCII);
                 }

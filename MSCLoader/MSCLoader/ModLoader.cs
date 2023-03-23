@@ -318,7 +318,7 @@ public partial class ModLoader : MonoBehaviour
         catch (Exception e)
         {
             steamID = null;
-            ModConsole.Error("Steam client doesn't exists.");
+            ModConsole.Error("Steam client doesn't exist.");
             if (devMode)
                 ModConsole.Error(e.ToString());
             System.Console.WriteLine(e);
@@ -352,14 +352,14 @@ public partial class ModLoader : MonoBehaviour
         }
 
         if (devMode)
-            ModConsole.Warning("You are running ModLoader in <color=red><b>DevMode</b></color>, this mode is <b>only for modders</b> and shouldn't be use in normal gameplay.");
+            ModConsole.Warning("You are running MSCLoader in <color=red><b>DevMode</b></color>, this mode is <b>only for modders</b> and shouldn't be used during normal gameplay.");
         System.Console.WriteLine(SystemInfoFix()); //operating system version to output_log.txt
 
         if (saveErrors != null)
         {
             if (saveErrors.Count > 0 && wasSaving)
             {
-                ModUI.ShowMessage($"Some mod thrown an error during saving{Environment.NewLine}Check console for more information!");
+                ModUI.ShowMessage($"A mod has thrown an error while saving{Environment.NewLine}Check the console for more information!");
                 for (int i = 0; i < saveErrors.Count; i++)
                 {
                     ModConsole.Error(saveErrors[i]);
@@ -444,7 +444,7 @@ public partial class ModLoader : MonoBehaviour
         cfmuInProgress = false;
         if (e.Error != null)
         {
-            ModConsole.Error("Failed to check for mods updates");
+            ModConsole.Error("Failed to check for mod updates");
             ModConsole.Error(e.Error.Message);
             Console.WriteLine(e.Error);
             cfmuErrored = true;
@@ -481,9 +481,9 @@ public partial class ModLoader : MonoBehaviour
                     switch (ed[1])
                     {
                         case "0":
-                            throw new Exception("Getting steamID failed.");
+                            throw new Exception("Failed to get SteamID.");
                         case "1":
-                            throw new Exception("steamID rejected.");
+                            throw new Exception("SteamID was rejected.");
                         default:
                             throw new Exception("Unknown error.");
                     }
@@ -511,7 +511,7 @@ public partial class ModLoader : MonoBehaviour
             if (ret && ModMenu.expWarning.GetValue())
             {
                 if (!Name.StartsWith("default_")) //default is NOT experimental branch
-                    ModUI.ShowMessage($"<color=orange><b>Warning:</b></color>{Environment.NewLine}You are using beta build: <color=orange><b>{Name}</b></color>{Environment.NewLine}{Environment.NewLine}Remember that some mods may not work correctly on beta branches.", "Experimental build warning");
+                    ModUI.ShowMessage($"<color=orange><b>Warning:</b></color>{Environment.NewLine}You are using a beta build: <color=orange><b>{Name}</b></color>{Environment.NewLine}{Environment.NewLine}Remember that some mods may not work correctly on beta branches.", "Experimental build warning");
             }
             System.Console.WriteLine($"MSC buildID: <b>{Steamworks.SteamApps.GetAppBuildId()}</b>");
             if (Steamworks.SteamApps.GetAppBuildId() == 1)
@@ -883,11 +883,11 @@ public partial class ModLoader : MonoBehaviour
             }
 
         }
-        canvLoading.lMod.text = "Resetting Done! You can skip intro now!";
+        canvLoading.lMod.text = "Resetting Done! You can skip the intro now!";
         yield return new WaitForSeconds(1f);
         canvLoading.modLoadingUI.SetActive(false);
         IsModsDoneResetting = true;
-        ModConsole.Print("<color=aqua>==== Resetting mods finished ====</color>");
+        ModConsole.Print("<color=aqua>==== Finished resetting mods ====</color>");
         IsModsResetting = false;
     }
 
@@ -926,7 +926,7 @@ public partial class ModLoader : MonoBehaviour
         }
         canvLoading.lProgress.value = 33;
         canvLoading.lTitle.text = "Waiting...".ToUpper();
-        canvLoading.lMod.text = "Waiting for game to finish load...";
+        canvLoading.lMod.text = "Waiting until the game has finished loading...";
         while (GameObject.Find("PLAYER/Pivot/AnimPivot/Camera/FPSCamera") == null)
             yield return null;
         canvLoading.lTitle.text = "Loading mods - Phase 2".ToUpper();
@@ -1041,7 +1041,7 @@ public partial class ModLoader : MonoBehaviour
             }
         }
         canvLoading.lTitle.text = "Waiting...".ToUpper();
-        canvLoading.lMod.text = "Waiting for game to finish load...";
+        canvLoading.lMod.text = "Waiting until the game has finished loading...";
         while (GameObject.Find("PLAYER/Pivot/AnimPivot/Camera/FPSCamera") == null)
             yield return null;
         canvLoading.lTitle.text = "Loading mods - Phase 2".ToUpper();
@@ -1383,7 +1383,7 @@ public partial class ModLoader : MonoBehaviour
 
             //Warn about wrong .net target, source of some mod crashes.
             if (!asm.ImageRuntimeVersion.Equals(Assembly.GetExecutingAssembly().ImageRuntimeVersion))
-                ModConsole.Warning($"File <b>{Path.GetFileName(file)}</b> is targeting runtime version <b>{asm.ImageRuntimeVersion}</b> which is different that current running version <b>{Assembly.GetExecutingAssembly().ImageRuntimeVersion}</b>. This may cause unexpected behaviours, check your target assembly.");
+                ModConsole.Warning($"File <b>{Path.GetFileName(file)}</b> is targeting runtime version <b>{asm.ImageRuntimeVersion}</b> which is different from the version currently running. <b>{Assembly.GetExecutingAssembly().ImageRuntimeVersion}</b>. This may cause unexpected side effects, please check your target assembly.");
 
             // Look through all public classes                
             Type[] asmTypes = asm.GetTypes();
@@ -1413,7 +1413,7 @@ public partial class ModLoader : MonoBehaviour
             }
             if (!isMod)
             {
-                ModConsole.Error($"<b>{Path.GetFileName(file)}</b> - doesn't look like a mod or missing Mod subclass!{Environment.NewLine}<b>Details:</b> File loaded correctly, but failed to find Mod methods.{Environment.NewLine}If this is a reference put this file into \"<b>References</b>\" folder.{Environment.NewLine}");
+                ModConsole.Error($"<b>{Path.GetFileName(file)}</b> - doesn't look like a mod or it's missing the Mod subclass!{Environment.NewLine}<b>Details:</b> File loaded correctly, but failed to find Mod methods.{Environment.NewLine}If this is a reference put this file into \"<b>References</b>\" folder.{Environment.NewLine}");
                 InvalidMods.Add(Path.GetFileName(file));
             }
         }
@@ -1425,15 +1425,15 @@ public partial class ModLoader : MonoBehaviour
                 if (addRef.Count > 0)
                 {
                     if ((addRef.Contains("MSCLoader.Features") && !ReferencesList.Select(x => x.AssemblyID).Contains("MSCLoader.Features")) || (addRef.Contains("MSCLoader.Helpers") && !ReferencesList.Select(x => x.AssemblyID).Contains("MSCLoader.Helpers")))
-                        ModUI.ShowYesNoMessage($"<color=yellow>{Path.GetFileName(file)}</color> - looks like a mod, but It crashed trying to load.{Environment.NewLine}{Environment.NewLine}Detected additional references used by this mod: {Environment.NewLine}<color=aqua>{string.Join(", ", addRef.ToArray())}</color> {Environment.NewLine}{Environment.NewLine} Looks like missing compatibility pack.{Environment.NewLine} Open download page?", "Crashed", delegate
+                        ModUI.ShowYesNoMessage($"<color=yellow>{Path.GetFileName(file)}</color> - looks like a mod, but it crashed trying to load.{Environment.NewLine}{Environment.NewLine}Detected additional references used by this mod: {Environment.NewLine}<color=aqua>{string.Join(", ", addRef.ToArray())}</color> {Environment.NewLine}{Environment.NewLine} Looks like missing compatibility pack.{Environment.NewLine} Open download page?", "Crashed", delegate
                          {
                              Application.OpenURL("https://www.nexusmods.com/mysummercar/mods/732");
                          });
                     else
-                        ModUI.ShowMessage($"<color=yellow>{Path.GetFileName(file)}</color> - looks like a mod, but It crashed trying to load.{Environment.NewLine} {Environment.NewLine}Detected additional references used by this mod: {Environment.NewLine}<color=aqua>{string.Join(", ", addRef.ToArray())}</color> {Environment.NewLine}{Environment.NewLine}Check mod download page for required references.", "Crashed");
+                        ModUI.ShowMessage($"<color=yellow>{Path.GetFileName(file)}</color> - looks like a mod, but it crashed trying to load.{Environment.NewLine} {Environment.NewLine}Detected additional references used by this mod: {Environment.NewLine}<color=aqua>{string.Join(", ", addRef.ToArray())}</color> {Environment.NewLine}{Environment.NewLine}Check mod download page for required references.", "Crashed");
                 }
                 else
-                    ModUI.ShowMessage($"<color=yellow>{Path.GetFileName(file)}</color> - looks like a mod, but It crashed trying to load.{Environment.NewLine}Reason: Unknown", "Crashed");
+                    ModUI.ShowMessage($"<color=yellow>{Path.GetFileName(file)}</color> - looks like a mod, but it crashed trying to load.{Environment.NewLine}Reason: Unknown", "Crashed");
 
             }
             else
@@ -1445,9 +1445,9 @@ public partial class ModLoader : MonoBehaviour
                 else
                 {
                     if (string.IsNullOrEmpty(e.Message))
-                        ModConsole.Error($"<b>{Path.GetFileName(file)}</b> - doesn't look like a mod, remove this file from mods folder!{Environment.NewLine}<b>Details:</b> {e.GetType().Name}{Environment.NewLine}");
+                        ModConsole.Error($"<b>{Path.GetFileName(file)}</b> - doesn't look like a mod, remove this file from the mods folder!{Environment.NewLine}<b>Details:</b> {e.GetType().Name}{Environment.NewLine}");
                     else
-                        ModConsole.Error($"<b>{Path.GetFileName(file)}</b> - doesn't look like a mod, remove this file from mods folder!{Environment.NewLine}<b>Details:</b> {e.GetFullMessage()}{Environment.NewLine}");
+                        ModConsole.Error($"<b>{Path.GetFileName(file)}</b> - doesn't look like a mod, remove this file from the mods folder!{Environment.NewLine}<b>Details:</b> {e.GetFullMessage()}{Environment.NewLine}");
                 }
             }
             if (devMode)
